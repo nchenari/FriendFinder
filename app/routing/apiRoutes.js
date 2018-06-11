@@ -5,7 +5,6 @@
 // ======================================================================
 var friends = require("../data/friends");
 
-
 // routing
 module.exports = function(app) {
     // API HTML GET Requests
@@ -23,17 +22,44 @@ module.exports = function(app) {
     // ...compatibility logic. 
     app.post("/api/friends", function(req, res) {
         // req.body is available since we're using the body-parser middleware
-        friends.push(req.body);
+        var newUser = req.body;
+        var newUserScores = newUser.scores;
+        console.log("new user questions array: " + newUserScores);
 
-        // handle friend compatibility logic here
+        // compare score arrays and find the closest matching friend
+        var currentClosestMatch;
+        var currentClosestMatchDifference;
+        for (var i = 0; i < friends.length; i++) {
 
-        // convert each user's results into a simple array of numbers
-        // comare the difference between current user's score against those from other users,
-        // ...question by question. Add up the differences to calculate the totalDifference
-        var totalDifference = 0;
+            // get next friend to compare
+            var newFriendToCompare = friend[i];
+            var newFriendToCompareScores = newFriendToCompare.scores;
 
-        // once you've found the current user's most comatible friend, display the result
-        // ...as a modal pop-up. THe modal should display both the name and picture of the closest match.
+            // calculate total difference between current friend and new user
+            var totalDifference = 0;
+            for (var j = 0; j < newUserScores.length; j++) {
+                // calculate difference between scores
+                var diff = parseInt(newUserScores[j]) - parseInt(newFriendToCompareScores[j]);
+                // add absolute value of difference to totalDifference
+                totalDifference += Math.abs(diff);
+            } // loop through score of one friend
+
+            if (totalDifference < currentClosestMatchDifference) {
+                // newFriendToCompare is currentClosestMatch to newUser
+                currentClosestMatch = newFriendToCompare;
+            }
+
+        } // loop through friends
         
+        // after comparing to currently stored friends, push to friends data api
+        friends.push(newUser);
+
+        // once you've found the current user's most comatible friend, display the result as a modal pop-up. 
+        console.log("friend who matches new user the most: " + currentClosestMatch.name);
+        
+        // The modal should display both the name and picture of the closest match.
     });
+
 }
+
+
