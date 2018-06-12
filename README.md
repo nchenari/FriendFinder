@@ -8,5 +8,5 @@ Friend Finder uses Node and Express to handle routing.
 
 ### Link to Heroku app hosting
 
-* Heroku deployed link: 
+* Heroku deployed link: https://morning-headland-49288.herokuapp.com/
 
