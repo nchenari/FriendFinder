@@ -158,6 +158,15 @@
       </div>
     </div>
 
+    <div id="modal1" class="modal">
+      <div class="modal-content center-align center">
+          <h1 id="match-name"></h1>
+          <img id="match-image"></img>
+      </div>
+      <div class="modal-footer">
+          <a href="/survey" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
 
     <footer class="footer">
       <div class="container">
@@ -209,21 +218,27 @@
 
       $.post("/api/friends", newFriend, function(data) {
 
-          alert("Yay! You are officially part of Friend Finder!");
+          // get json friend returned from apiRoutes.js post method
+          $("#match-name").text("Your match: " + data.name + "!!!");
+          // set src for image to image url from json property
+          $("#match-image").attr("src", data.photo);
+
+          // show modal with match
+          $(".modal").modal("show");
 
           // Clear the form when submitting
           $("#friend-name").val("");
           $("#friend-photo").val("");
-          $("#question-1").val("");
-          $("#question-2").val("");
-          $("#question-3").val("");
-          $("#question-4").val("");
-          $("#question-5").val("");
-          $("#question-6").val("");
-          $("#question-7").val("");
-          $("#question-8").val("");
-          $("#question-9").val("");
-          $("#question-10").val("");
+          $("#question-1").val("0");
+          $("#question-2").val("0");
+          $("#question-3").val("0");
+          $("#question-4").val("0");
+          $("#question-5").val("0");
+          $("#question-6").val("0");
+          $("#question-7").val("0");
+          $("#question-8").val("0");
+          $("#question-9").val("0");
+          $("#question-10").val("0");
 
         });
 
